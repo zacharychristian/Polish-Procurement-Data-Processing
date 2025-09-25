@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: polish-data-daily
+spec:
+  schedule: "0 0 * * *"  # Runs at midnight UTC
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          initContainers:
+          - name: init-container-1 #Runs raw_to_s3_2 first, and s3_to_rs_2 after raw_to_s3_2 is finished running
+            image: raw_to_s3_2
+            imagePullPolicy: IfNotPresent
+          containers:
+          - name: main-container-2
+            image: s3_to_rs_2
+            imagePullPolicy: IfNotPresent
