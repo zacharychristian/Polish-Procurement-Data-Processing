@@ -1,0 +1,43 @@
+# Use Spark + Python + OpenJDK base image
+FROM bitnami/spark:3.5.1
+
+# Set working directory
+WORKDIR /app
+
+# Install required system packages
+USER root
+RUN apt-get update && apt-get install -y \
+    python3-pip \
+    git \
+    curl \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install required Python packages
+RUN pip3 install --upgrade pip && \
+    pip3 install \
+        pandas \
+        findspark \
+        requests \
+        boto3 \
+        "pyarrow>=4.0.0"
+
+# Add Hadoop AWS and AWS Java SDK JARs for Spark S3 support
+ENV HADOOP_AWS_VERSION=3.3.4
+RUN mkdir -p /opt/spark/jars && \
+    curl -o /opt/spark/jars/hadoop-aws-${HADOOP_AWS_VERSION}.jar \
+    https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/${HADOOP_AWS_VERSION}/hadoop-aws-${HADOOP_AWS_VERSION}.jar && \
+    curl -o /opt/spark/jars/aws-java-sdk-bundle-1.12.262.jar \
+    https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-bundle/1.12.262/aws-java-sdk-bundle-1.12.262.jar
+
+# Add Redshift JDBC JAR
+RUN curl -o /opt/spark/jars/redshift-jdbc42-2.1.0.9.jar \
+    https://s3.amazonaws.com/redshift-downloads/drivers/jdbc/2.1.0.9/redshift-jdbc42-2.1.0.9.jar
+
+# Set Spark classpath for all JARs
+ENV SPARK_CLASSPATH="/opt/spark/jars/*"
+
+# Copy Spark app
+COPY s3_to_db_spark_cleaning.py .
+
+# Run Spark with S3 + Redshift support
+CMD ["spark-submit", "--master", "local[*]", "--jars", "/opt/spark/jars/hadoop-aws-3.3.4.jar,/opt/spark/jars/aws-java-sdk-bundle-1.12.262.jar,/opt/spark/jars/redshift-jdbc42-2.1.0.9.jar", "s3_to_db_spark_cleaning.py"]
