@@ -29,7 +29,10 @@ The purpose of this project is to build an end to end data engineering pipeline.
 
 - ### Data Description
 Each item in the JSON contains data is a procurement tender published from Poland. A procurement tender is a formal, competitive process where an organization, typically public but also private, invites potential suppliers to submit bids for the provision of goods, services, or works. 
+
 Below is one of the tenders in the JSON.
+
+
 {'id': '586948',<br>
    'date': '2023-05-03',<br>
    'title': 'Dostawa licencji IBM wraz z 12 miesięcznym wsparciem technicznym producenta',<br>
