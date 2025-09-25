@@ -23,7 +23,7 @@ The purpose of this project is to build an end to end data engineering pipeline.
      - Using Docker, cd into the raw_to_s3 folder and input this command into docker: docker build -t raw_to_s3_2 .
      - Then cd into the s3_to_rs folder and use this command in docker: docker build -t s3_to_rs_2 .
 - Spin up a Kubernetes cluster
-     - Apply the Kubernetes pod spec: kubectl apply -f bb.yaml
+     - Then apply the Kubernetes pod spec. This will run the docker images: kubectl apply -f bb.yaml
      - Watch the logs of the data pipeline with: kubectl get pods -w
 
 
