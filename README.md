@@ -17,8 +17,19 @@ The purpose of this project is to build an end to end data engineering pipeline.
 ## System Architecture
 ![alt text](img/system_diagram.png "System Architecture Diagram")
 
+### How to run:
+- First, make docker images using docker files and python scripts.
+     - Download dockerfiles and python scripts into a file system.
+     - Using Docker, cd into the raw_to_s3 folder and input this command into docker: docker build -t raw_to_s3_2 .
+     - Then cd into the s3_to_rs folder and use this command in docker: docker build -t s3_to_rs_2 .
+- Spin up a Kubernetes cluster
+     - Apply the Kubernetes pod spec: kubectl apply -f bb.yaml
+     - Watch the logs of the data pipeline with: kubectl get pods -w
 
-- ### One of the entries in the JSON from the public API:
+
+- ### Data Description
+Each item in the JSON contains data is a procurement tender published from Poland. A procurement tender is a formal, competitive process where an organization, typically public but also private, invites potential suppliers to submit bids for the provision of goods, services, or works. 
+Below is one of the tenders in the JSON.
 {'id': '586948',<br>
    'date': '2023-05-03',<br>
    'title': 'Dostawa licencji IBM wraz z 12 miesięcznym wsparciem technicznym producenta',<br>
