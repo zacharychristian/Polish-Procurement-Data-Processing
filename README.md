@@ -13,3 +13,4 @@ The purpose of this project is to build an end to end data engineering pipeline.
 - Apache Spark is used to ingest, load, clean, and transform data in this project. Spark is used to ingest data from S3, and load data into S3 and Redshift. 
 
 This is the project plan: 
+![alt text](img/system_diagram.png "System Architecture Diagram")
