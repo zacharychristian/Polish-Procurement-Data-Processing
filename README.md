@@ -12,7 +12,7 @@ The purpose of this project is to build an end to end data engineering pipeline.
 
 - Apache Spark is used to ingest, load, clean, and transform data in this project. Spark is used to ingest data from S3, and load data into S3 and Redshift.
 
-- Data Source: We will use https://tenders.guru/pl/api#get-tender-details a Polish procurement API to get procurement data in JSON format.
+- Data Source: We will use https://tenders.guru/pl/api#get-tender-details - a Polish procurement API to get procurement data in JSON format.
 
 ## System Architecture
 ![alt text](img/system_diagram.png "System Architecture Diagram")
